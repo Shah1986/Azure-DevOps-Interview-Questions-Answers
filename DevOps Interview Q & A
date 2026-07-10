@@ -825,7 +825,7 @@ Collaborate with development, QA, and operations teams.
 Perform root cause analysis for incidents.
 
 Ensure secure, reliable, and automated software delivery.
-
+============================================================================================
 Frequently Asked Scenario-Based Questions
 A pipeline fails only in Production but succeeds in Dev. How would you troubleshoot it?
 
@@ -850,4 +850,383 @@ An Azure DevOps organization reaches its parallel job limit. How would you minim
 These advanced questions cover the areas Accenture commonly explores for candidates with hands-on Azure DevOps experience and are useful for interviews requiring both DevOps and production support knowledge.
 
 
+=====================================================================================
 
+
+1. A pipeline fails only in Production but succeeds in Dev. How would you troubleshoot it?
+Answer
+
+My approach would be systematic:
+
+Compare the Production and Dev pipeline configurations.
+Check whether the Production stage uses different:
+Service Connections
+Variable Groups
+Azure Key Vault secrets
+Environment variables
+Review deployment logs to identify the exact failing task.
+Verify deployment approvals and environment permissions.
+Confirm Production infrastructure is healthy.
+Validate firewall, NSG, Private Endpoint, and network connectivity.
+Verify the application configuration files.
+Check if certificates or secrets have expired.
+Review recent Production changes.
+If business impact is high, initiate rollback using the last successful deployment.
+Perform RCA and document preventive actions.
+
+Possible Causes
+
+Wrong Production variables
+Expired certificate
+Invalid Service Connection
+Firewall restrictions
+Missing permissions
+Database connectivity issue
+2. A self-hosted agent is offline before a critical deployment. What steps would you take?
+Answer
+
+First, I would minimize deployment delay.
+
+Step 1
+
+Check whether the agent is actually offline from Azure DevOps.
+
+Step 2
+
+Login to the server hosting the agent.
+
+Step 3
+
+Check Agent Service.
+
+Linux
+
+sudo systemctl status vsts.agent.*
+
+Windows
+
+services.msc
+Step 4
+
+Restart Agent
+
+Linux
+
+sudo systemctl restart vsts.agent.*
+
+Windows
+
+Restart Azure Pipelines Agent service.
+
+Step 5
+
+Verify
+
+Internet connectivity
+Azure DevOps connectivity
+Disk space
+CPU
+Memory
+Step 6
+
+Check agent logs
+
+_diag folder
+Step 7
+
+If unavailable, switch pipeline to
+
+Another Self-hosted Agent
+Microsoft Hosted Agent (if applicable)
+Step 8
+
+Inform stakeholders.
+
+Step 9
+
+Complete deployment.
+
+3. A deployment succeeded, but the application returns HTTP 500 errors. How would you investigate?
+Answer
+
+A successful deployment doesn't necessarily mean the application is healthy.
+
+I would:
+
+Check Application Logs
+IIS Logs / Nginx Logs
+Application Insights
+Azure Monitor
+Event Viewer
+Docker logs (if containerized)
+
+Then verify
+
+Database connectivity
+Connection strings
+Key Vault secrets
+Missing DLLs
+Configuration files
+API endpoints
+Storage Account access
+
+Next
+
+Check recent configuration changes.
+Compare previous working deployment.
+
+If needed
+
+Rollback immediately.
+
+Finally
+
+Perform RCA.
+
+Possible reasons
+
+Incorrect appsettings.json
+Missing environment variable
+Database unavailable
+Expired certificate
+Null reference exception
+Permission issue
+4. Azure Artifacts packages are no longer available. What could be the cause?
+Answer
+
+Possible causes include:
+
+Package deleted
+Feed permissions removed
+Feed retention policy deleted packages
+Upstream source unavailable
+Package unlisted
+Feed corrupted
+Wrong feed selected
+Authentication failure
+Package version removed
+Organization migration
+
+I would check
+
+Feed permissions
+Package history
+Recycle Bin
+Audit Logs
+Upstream Sources
+Azure DevOps Service Health
+5. Developers cannot create pull requests due to branch policies. How would you diagnose the issue?
+Answer
+
+I would verify:
+
+Repository permissions
+Branch security
+Branch Policies
+Required reviewers
+Build Validation
+Required work items
+Comment resolution
+Merge strategy restrictions
+
+Also verify
+
+Developer has
+
+Contribute permission
+Create Branch permission
+Create Pull Request permission
+
+If Build Validation fails
+
+Check pipeline logs.
+
+6. A service connection suddenly starts failing with authentication errors. How would you troubleshoot it?
+Answer
+
+I would verify
+
+Service Connection status
+Credentials expired?
+Secret expired?
+Certificate expired?
+Service Principal disabled?
+Subscription permissions removed?
+Azure RBAC changed?
+Azure AD App deleted?
+Tenant changed?
+
+Then
+
+Click
+
+Verify Service Connection
+
+If failed
+
+Re-authenticate.
+
+Check
+
+Azure Activity Logs
+
+Finally
+
+Run deployment again.
+
+7. Pipeline secrets are accidentally exposed in logs. What immediate actions would you take?
+Answer
+
+This is a security incident.
+
+Immediate actions:
+
+Stop pipeline.
+Revoke exposed credentials.
+Rotate secrets.
+Generate new passwords.
+Update Azure Key Vault.
+Remove secrets from logs.
+Restrict access to logs.
+Inform Security Team.
+Check Audit Logs.
+Update pipeline to use Secret Variables.
+
+Finally
+
+Document Incident.
+
+8. A deployment to Kubernetes fails because pods are not becoming ready. How would you investigate?
+Answer
+
+First check
+
+kubectl get pods
+
+Then
+
+kubectl describe pod
+
+Then
+
+kubectl logs PODNAME
+
+Verify
+
+Readiness Probe
+Liveness Probe
+Image Pull
+CrashLoopBackOff
+OOMKilled
+Missing ConfigMap
+Missing Secret
+PVC mounting
+CPU limits
+Memory limits
+
+Also verify
+
+kubectl get events
+
+If image pull issue
+
+Check
+
+Container Registry Authentication.
+
+If configuration issue
+
+Fix ConfigMap/Secret
+
+Redeploy.
+
+9. Users report slow application performance immediately after deployment. What checks would you perform?
+Answer
+
+I would investigate in this order:
+
+Infrastructure
+
+CPU
+Memory
+Disk
+Network
+
+Application
+
+Application logs
+Slow APIs
+Exceptions
+
+Database
+
+Long-running queries
+Blocking
+Deadlocks
+Indexes
+
+Monitoring
+
+Azure Monitor
+Application Insights
+Grafana
+Splunk
+
+Deployment
+
+Compare
+
+Old version
+
+vs
+
+New version
+
+If performance degraded
+
+Rollback deployment.
+
+Then perform RCA.
+
+10. An Azure DevOps organization reaches its parallel job limit. How would you minimize deployment delays?
+Answer
+
+First
+
+Check
+
+Organization Settings
+
+→ Parallel Jobs
+
+Identify
+
+Running pipelines
+Queued pipelines
+
+Optimize
+
+Cancel unnecessary builds
+Merge duplicate builds
+Reduce long-running jobs
+Enable Pipeline Caching
+Parallelize test execution
+Reduce build duration
+Use incremental builds
+
+If urgent
+
+Deploy manually.
+
+Long-term solution
+
+Purchase additional Microsoft-hosted parallel jobs.
+Add more self-hosted agents.
+Schedule non-critical pipelines during off-peak hours.
+Optimize pipeline design to reduce unnecessary executions.
+Bonus Interview Question
+Interviewer: Tell me about a challenging Azure DevOps issue you resolved.
+
+Sample Answer (based on your experience):
+
+One challenging issue involved Azure Artifacts where upstream package versions, such as Microsoft.AspNetCore.App.Ref, were not visible across multiple feeds, even before any package deletion. I first verified the upstream source configuration and feed permissions, then compared behavior across feeds to rule out feed-specific issues. I checked Azure DevOps service health, validated that the package was part of the .NET shared framework rather than a typical NuGet package, and reviewed feed settings and caching behavior. Since the issue was reproducible across multiple feeds, I gathered logs and evidence, documented the troubleshooting steps, and escalated the issue to Microsoft Support with all relevant details. This systematic approach helped narrow the problem to a platform-level behavior rather than a configuration issue and minimized unnecessary changes to the environment.
