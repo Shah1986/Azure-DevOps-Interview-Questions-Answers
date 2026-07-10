@@ -1,0 +1,853 @@
+
+
+
+Yesterday 4:29 PM
+Application support engineer role interview questions and answers for Accenture 
+
+If you're interviewing for an Application Support Engineer role at Accenture, expect questions covering application support, incident management, SQL, Linux, cloud basics, ITIL, and troubleshooting. Below are common interview questions with sample answers.
+
+1. Tell me about yourself.
+Answer:
+
+I have experience in IT support and DevOps with exposure to Azure DevOps, CI/CD pipelines, release management, and troubleshooting application issues. I have worked on resolving production incidents, monitoring application health, coordinating with development teams, and ensuring minimal downtime. I enjoy analyzing root causes and providing permanent solutions while maintaining SLAs.
+
+2. What does an Application Support Engineer do?
+Answer:
+An Application Support Engineer:
+
+Monitors application availability.
+
+Resolves production incidents.
+
+Performs root cause analysis.
+
+Handles deployments.
+
+Coordinates with developers and infrastructure teams.
+
+Monitors logs and system performance.
+
+Ensures SLA compliance.
+
+Creates knowledge base articles.
+
+3. What is an Incident?
+Answer:
+An incident is an unplanned interruption or reduction in the quality of an IT service that requires immediate attention to restore normal operations.
+
+4. Difference between Incident, Problem, and Change?
+Incident	Problem	Change
+Unexpected issue	Root cause of recurring incidents	Modification to IT infrastructure/application
+Needs immediate fix	Permanent solution	Planned implementation
+5. What is SLA?
+Answer:
+Service Level Agreement defines the agreed response and resolution time for incidents.
+
+Example:
+
+P1 – Response: 15 mins, Resolution: 4 hrs
+
+P2 – Response: 30 mins
+
+P3 – Response: 1 hr
+
+P4 – Response: 4 hrs
+
+6. What is a P1 Incident?
+Answer:
+A P1 incident is a critical issue where the production application is completely unavailable and impacts business operations. It requires immediate escalation and continuous communication until resolved.
+
+7. How do you handle a Production Issue?
+Answer:
+
+Understand the issue.
+
+Check monitoring dashboards.
+
+Review logs.
+
+Verify server/database health.
+
+Restart services if necessary.
+
+Escalate to appropriate teams.
+
+Update stakeholders.
+
+Perform Root Cause Analysis.
+
+Document the resolution.
+
+8. Explain Root Cause Analysis (RCA).
+Answer:
+RCA identifies the actual reason behind an issue so it does not happen again.
+
+Typical RCA includes:
+
+Issue description
+
+Timeline
+
+Root cause
+
+Impact
+
+Resolution
+
+Preventive action
+
+9. Difference between Severity and Priority?
+Severity	Priority
+Business impact	Order of fixing
+Technical impact	Business urgency
+10. What monitoring tools have you used?
+Answer:
+Examples:
+
+Splunk
+
+AppDynamics
+
+Dynatrace
+
+Grafana
+
+Prometheus
+
+Azure Monitor
+
+Nagios
+
+11. What is a Health Check?
+Answer:
+Health checks verify whether the application, database, services, APIs, CPU, memory, and disk space are functioning normally.
+
+12. How do you troubleshoot an application that is running slowly?
+Answer:
+
+Check CPU and memory usage.
+
+Review application logs.
+
+Verify database performance.
+
+Check network latency.
+
+Identify slow SQL queries.
+
+Restart affected services if needed.
+
+Review recent deployments.
+
+13. SQL Queries
+Find duplicate records
+SELECT EmployeeID, COUNT(*)
+FROM Employee
+GROUP BY EmployeeID
+HAVING COUNT(*) > 1;
+Top 5 highest salaries
+SELECT *
+FROM Employee
+ORDER BY Salary DESC
+LIMIT 5;
+Second highest salary
+SELECT MAX(Salary)
+FROM Employee
+WHERE Salary <
+(
+SELECT MAX(Salary)
+FROM Employee
+);
+14. Linux Commands
+Command	Purpose
+ls	List files
+pwd	Current directory
+cd	Change directory
+top	CPU usage
+ps -ef	Running processes
+grep	Search text
+df -h	Disk usage
+free -m	Memory
+tail -100 log.txt	View latest logs
+chmod	Change permissions
+systemctl status service	Service status
+15. How do you check logs?
+tail -100 application.log
+grep ERROR application.log
+less application.log
+16. What is a 500 Error?
+Answer:
+HTTP 500 Internal Server Error indicates the server encountered an unexpected condition while processing the request.
+
+Possible reasons:
+
+Null pointer exception
+
+Database issue
+
+Configuration error
+
+Server crash
+
+17. Difference between 404 and 500?
+404 → Resource not found.
+
+500 → Internal server error.
+
+18. Explain REST API.
+Answer:
+REST API allows applications to communicate using HTTP methods:
+
+GET
+
+POST
+
+PUT
+
+DELETE
+
+19. What would you do if the database is down?
+Answer:
+
+Verify database status.
+
+Check database logs.
+
+Confirm network connectivity.
+
+Restart database service if permitted.
+
+Notify DBA team.
+
+Keep stakeholders updated.
+
+Monitor after recovery.
+
+20. How do you prioritize multiple incidents?
+Answer:
+Based on:
+
+Business impact
+
+Number of affected users
+
+SLA
+
+Severity
+
+Customer commitments
+
+21. Explain ITIL.
+Answer:
+ITIL is a framework for IT Service Management that includes:
+
+Incident Management
+
+Problem Management
+
+Change Management
+
+Release Management
+
+Configuration Management
+
+22. What is a Change Request?
+Answer:
+A Change Request is a formal request to modify production systems while minimizing risk and obtaining the necessary approvals.
+
+23. What is a Deployment?
+Answer:
+Deployment is the process of moving application code from development or testing into production using controlled release procedures.
+
+24. Why do you want to join Accenture?
+Answer:
+
+Accenture is known for delivering technology solutions across diverse industries. I want to work in an environment where I can enhance my application support skills, collaborate with global teams, work on modern cloud technologies, and contribute to maintaining high-quality services while continuing to grow professionally.
+
+25. Why should we hire you?
+Answer:
+
+I have strong analytical and troubleshooting skills, experience working with Azure DevOps and production support processes, and a good understanding of SQL, Linux, and incident management. I work well under pressure, communicate effectively with stakeholders, and focus on resolving issues quickly while identifying long-term improvements.
+
+Interview tips for Accenture
+Be comfortable with SQL queries and joins.
+
+Know basic Linux troubleshooting commands.
+
+Understand ITIL concepts (Incident, Problem, Change, SLA).
+
+Be ready to explain production issue scenarios.
+
+Demonstrate clear communication and stakeholder management.
+
+If you have Azure DevOps experience, explain how you've handled deployments, monitored pipelines, and supported production applications—this aligns well with application support responsibilities.
+
+
+For Azure DevOps
+
+Since your background is in Azure DevOps, Accenture may ask how your DevOps experience translates into an Application Support Engineer role. Here are Azure DevOps-focused interview questions with sample answers.
+
+1. Explain your Azure DevOps experience.
+Answer:
+
+I have experience working with Azure DevOps for source code management, CI/CD pipeline creation, release management, Azure Artifacts, service connections, Azure Repos, Azure Boards, and deployment automation. I have also supported production deployments, resolved pipeline failures, managed permissions, and worked with development teams to ensure smooth application releases.
+
+2. What are the main services in Azure DevOps?
+Answer:
+
+Azure Repos
+
+Azure Pipelines
+
+Azure Boards
+
+Azure Artifacts
+
+Azure Test Plans
+
+3. What is CI/CD?
+Answer:
+
+Continuous Integration (CI)
+
+Developers commit code frequently.
+
+Build and unit tests run automatically.
+
+Continuous Deployment (CD)
+
+The validated application is automatically deployed to different environments such as Development, QA, UAT, and Production.
+
+4. Explain your CI/CD pipeline.
+Answer:
+A typical pipeline includes:
+
+Code checkout from Azure Repos.
+
+Restore dependencies.
+
+Build the application.
+
+Run unit tests.
+
+Perform code quality checks (e.g., SonarQube if applicable).
+
+Publish build artifacts.
+
+Deploy to Dev, QA, UAT, and Production.
+
+Run post-deployment verification.
+
+5. What is a Self-hosted Agent?
+Answer:
+A self-hosted agent is installed on an organization's own server or VM to execute Azure DevOps pipelines. It is useful when deployments require access to private networks, internal resources, or specific software not available on Microsoft-hosted agents.
+
+6. Difference between Microsoft-hosted and Self-hosted Agents
+Microsoft-hosted	Self-hosted
+Managed by Microsoft	Managed by the organization
+Fresh VM for each run	Reuses existing machine
+Limited customization	Fully customizable
+No access to private network by default	Can access internal servers and databases
+7. What is Azure Artifacts?
+Answer:
+Azure Artifacts is a package management service that stores and shares packages such as NuGet, npm, Maven, Python, and Universal Packages. It also supports upstream sources for consuming public packages through a private feed.
+
+8. What is an Upstream Source?
+Answer:
+An upstream source allows Azure Artifacts to fetch packages from external repositories (such as NuGet.org) and cache them in your organization's feed for improved reliability and control.
+
+9. Explain YAML Pipeline.
+Answer:
+A YAML pipeline defines build and deployment steps as code, enabling version control, code reviews, and easier maintenance compared to classic pipelines.
+
+10. What are Stages, Jobs, and Steps?
+Answer:
+
+Stage – Major phase (Build, Test, Deploy)
+
+Job – Group of tasks executed on an agent
+
+Step – Individual task or script within a job
+
+11. How do you troubleshoot a failed pipeline?
+Answer:
+
+Review pipeline logs.
+
+Identify the failed task.
+
+Verify variables and parameters.
+
+Check service connections and permissions.
+
+Confirm agent availability.
+
+Validate dependency versions.
+
+Reproduce the issue locally if possible.
+
+Fix the root cause and rerun the pipeline.
+
+12. What is a Service Connection?
+Answer:
+A service connection securely stores credentials so Azure DevOps can authenticate with external services such as Azure, AWS, GitHub, Docker Hub, or Kubernetes.
+
+13. Explain Variable Groups.
+Answer:
+Variable Groups allow sharing common variables and secrets across multiple pipelines. Secrets can be securely stored and linked from Azure Key Vault.
+
+14. What is Azure Key Vault?
+Answer:
+Azure Key Vault securely stores secrets, certificates, and encryption keys. Pipelines can retrieve these values at runtime without exposing sensitive information in the YAML.
+
+15. How do you secure secrets in Azure DevOps?
+Answer:
+
+Use secret pipeline variables.
+
+Store secrets in Azure Key Vault.
+
+Restrict access using RBAC.
+
+Avoid hardcoding credentials in code or YAML.
+
+Mask secrets in pipeline logs.
+
+16. What is an Environment in Azure DevOps?
+Answer:
+An Environment represents a deployment target, such as Dev, QA, UAT, or Production. It supports deployment history, approvals, and resource tracking.
+
+17. What are Deployment Approvals?
+Answer:
+Approvals require designated users to authorize deployments before they proceed to sensitive environments like UAT or Production.
+
+18. What would you do if a Production deployment failed?
+Answer:
+
+Review deployment logs.
+
+Identify the failed step.
+
+Roll back if required.
+
+Notify stakeholders.
+
+Resolve the issue.
+
+Validate the application after recovery.
+
+Perform Root Cause Analysis (RCA).
+
+Update documentation to prevent recurrence.
+
+19. What is Infrastructure as Code (IaC)?
+Answer:
+Infrastructure as Code automates infrastructure provisioning using code instead of manual configuration. Examples include Terraform, Bicep, and ARM templates.
+
+20. What monitoring tools have you used?
+Answer:
+Examples include:
+
+Azure Monitor
+
+Application Insights
+
+Log Analytics
+
+Grafana
+
+Prometheus
+
+Splunk
+
+These tools help monitor application health, performance, logs, and alerts.
+
+21. Explain a production issue you resolved.
+Sample Answer:
+
+During a production deployment, a pipeline failed because the authentication certificate used for deployment had expired. I reviewed the pipeline logs, confirmed the certificate issue, renewed the certificate, updated the secure credentials, reran the pipeline, and verified a successful deployment. I also documented the issue and recommended monitoring certificate expiry dates to prevent recurrence.
+
+22. What is your daily work as an Azure DevOps Engineer?
+Sample Answer:
+
+Monitor CI/CD pipelines.
+
+Support developers with build and deployment issues.
+
+Manage Azure Repos and pull requests.
+
+Create and maintain YAML pipelines.
+
+Configure service connections and environments.
+
+Manage Azure Artifacts feeds.
+
+Troubleshoot pipeline failures.
+
+Coordinate production deployments.
+
+Perform release validations.
+
+Support incident resolution and RCA.
+
+Scenario-Based Question
+Interviewer: A production deployment failed and business users are waiting. What will you do?
+
+Sample Answer:
+
+First, I would acknowledge the incident and assess its business impact. I would review the deployment logs to identify the failing step, verify the health of the deployment agent and service connections, and determine whether the issue is related to the application, infrastructure, or configuration. If the failure affects production availability, I would initiate a rollback based on the approved rollback plan. Throughout the process, I would keep stakeholders informed with regular updates. After service is restored, I would perform a root cause analysis, document the findings, and implement preventive measures.
+
+These questions align well with your Azure DevOps experience and are commonly discussed in Accenture interviews for Application Support Engineer roles, especially when transitioning from a DevOps background.
+
+
+Today 7:48 AM
+add more questions and answers for the azure devops
+
+Since you already have Azure DevOps experience, Accenture interviewers (especially for Application Support Engineer, Azure DevOps Engineer, or Cloud Support Engineer) may ask advanced and scenario-based questions. Below are 40 additional Azure DevOps interview questions with sample answers.
+
+1. What is Azure DevOps?
+Answer:
+Azure DevOps is a Microsoft platform that provides end-to-end DevOps services, including source control, project management, CI/CD pipelines, package management, and testing.
+
+2. What are the advantages of Azure DevOps?
+Answer:
+
+Faster software delivery
+
+Automated CI/CD
+
+Better collaboration
+
+Integration with Azure and GitHub
+
+Built-in security
+
+Easy monitoring
+
+Version control
+
+Agile project management
+
+3. What is Azure Repos?
+Answer:
+Azure Repos provides Git repositories and Team Foundation Version Control (TFVC) to manage source code with features like pull requests, branch policies, and code reviews.
+
+4. Difference between Git and TFVC?
+Git	TFVC
+Distributed	Centralized
+Offline commits	Online only
+Branching is easy	Branching is expensive
+Most commonly used	Legacy projects
+5. What is a Pull Request?
+Answer:
+A Pull Request is used to merge code from one branch into another after code review and validation.
+
+6. What are Branch Policies?
+Answer:
+Branch policies enforce quality before code is merged, such as:
+
+Minimum reviewers
+
+Successful build validation
+
+Linked work items
+
+Comment resolution
+
+Required approvals
+
+7. Explain Git Flow.
+Answer:
+Typical branches:
+
+Main
+
+Develop
+
+Feature
+
+Release
+
+Hotfix
+
+8. Difference between Merge and Rebase?
+Merge
+
+Preserves history
+
+Creates merge commit
+
+Rebase
+
+Cleaner history
+
+Rewrites commit history
+
+9. What is Build Validation?
+Answer:
+Automatically triggers a build when a pull request is created to ensure code quality before merging.
+
+10. What are Pipeline Triggers?
+Answer:
+
+CI Trigger
+
+PR Trigger
+
+Schedule Trigger
+
+Manual Trigger
+
+Pipeline Completion Trigger
+
+11. Difference between CI and PR Trigger?
+CI runs after code is pushed.
+
+PR Trigger runs before merging.
+
+12. What is a Pipeline Artifact?
+Answer:
+Pipeline artifacts store build outputs that can be used in later stages or release pipelines.
+
+13. Difference between Build Artifacts and Pipeline Artifacts?
+Build Artifacts:
+
+Older
+
+Slower
+
+Pipeline Artifacts:
+
+Faster
+
+Better optimized
+
+Recommended
+
+14. What is Multi-stage YAML?
+Answer:
+A single YAML file containing Build, Test, Deploy, and Approval stages.
+
+15. Explain Runtime Parameters.
+Answer:
+Runtime parameters allow users to select options like environment or region when manually starting a pipeline.
+
+16. What are Conditions?
+Answer:
+Conditions determine whether a stage, job, or task runs.
+
+Example:
+
+succeeded()
+
+failed()
+
+always()
+
+succeededOrFailed()
+
+17. What are Expressions?
+Answer:
+Expressions evaluate variables or conditions dynamically during pipeline execution.
+
+18. Difference between Variables and Parameters?
+Variables:
+
+Can change during execution
+
+Parameters:
+
+Fixed before pipeline starts
+
+19. What is Azure Key Vault integration?
+Answer:
+Azure DevOps can securely retrieve secrets from Azure Key Vault during pipeline execution instead of storing them directly in YAML.
+
+20. Explain Secure Files.
+Answer:
+Secure Files securely store certificates, SSH keys, and other sensitive files for use during pipeline execution.
+
+21. What is Library in Azure DevOps?
+Answer:
+The Library stores reusable resources such as variable groups and secure files.
+
+22. How do you deploy to multiple environments?
+Answer:
+Using multi-stage YAML pipelines with separate deployment stages, approvals, and environment-specific variables.
+
+23. Explain Deployment Strategy.
+Answer:
+Strategies include:
+
+runOnce
+
+Rolling
+
+Canary
+
+Blue-Green
+
+24. What is Rolling Deployment?
+Answer:
+Deploys updates gradually to subsets of servers to reduce risk.
+
+25. What is Canary Deployment?
+Answer:
+Deploys a new version to a small percentage of users before a full rollout.
+
+26. What is Blue-Green Deployment?
+Answer:
+Maintains two identical production environments. Traffic switches to the new environment only after validation.
+
+27. How do you rollback a deployment?
+Answer:
+
+Redeploy previous artifact
+
+Revert Git changes
+
+Restore backups if required
+
+Validate application health
+
+28. What is an Agent Pool?
+Answer:
+An Agent Pool is a collection of build agents available for running pipelines.
+
+29. Difference between Agent Pool and Queue?
+Answer:
+Agent Pool contains agents.
+
+Queue assigns pipeline jobs to available agents.
+
+30. Explain Hosted Agents.
+Answer:
+Hosted agents are managed by Microsoft and provide clean virtual machines for each pipeline run.
+
+31. Why would a Pipeline remain queued?
+Answer:
+Possible reasons:
+
+No available agents
+
+Offline self-hosted agent
+
+Parallel job limit reached
+
+Pool permission issues
+
+Agent capability mismatch
+
+32. What are Agent Capabilities?
+Answer:
+Capabilities identify software installed on an agent, such as Java, .NET SDK, Node.js, or custom tools.
+
+33. What are Demands?
+Answer:
+Demands ensure a pipeline runs only on agents that meet specific capability requirements.
+
+34. What is Azure Boards?
+Answer:
+Azure Boards is used for Agile planning with Epics, Features, User Stories, Tasks, Bugs, and Sprint tracking.
+
+35. Explain Work Item Types.
+Answer:
+
+Epic
+
+Feature
+
+User Story
+
+Task
+
+Bug
+
+Issue
+
+36. What is Azure Test Plans?
+Answer:
+Azure Test Plans manages manual testing, exploratory testing, and test case execution.
+
+37. How do you troubleshoot deployment failures?
+Answer:
+
+Review logs
+
+Check service connections
+
+Verify agent status
+
+Validate permissions
+
+Check application configuration
+
+Test deployment manually if necessary
+
+38. What is a Service Hook?
+Answer:
+Service Hooks send notifications or trigger actions in external services (Teams, Slack, Jenkins, etc.) based on Azure DevOps events.
+
+39. How do you improve pipeline performance?
+Answer:
+
+Cache dependencies
+
+Use Pipeline Artifacts
+
+Run jobs in parallel
+
+Avoid unnecessary tasks
+
+Use incremental builds
+
+Optimize test execution
+
+40. What are your responsibilities as an Azure DevOps Engineer?
+Answer:
+
+Build and maintain CI/CD pipelines.
+
+Manage Azure Repos, Boards, and Artifacts.
+
+Support production deployments.
+
+Troubleshoot build and release failures.
+
+Configure service connections and agent pools.
+
+Manage secrets using Azure Key Vault.
+
+Monitor deployments and application health.
+
+Collaborate with development, QA, and operations teams.
+
+Perform root cause analysis for incidents.
+
+Ensure secure, reliable, and automated software delivery.
+
+Frequently Asked Scenario-Based Questions
+A pipeline fails only in Production but succeeds in Dev. How would you troubleshoot it?
+
+A self-hosted agent is offline before a critical deployment. What steps would you take?
+
+A deployment succeeded, but the application returns HTTP 500 errors. How would you investigate?
+
+Azure Artifacts packages are no longer available. What could be the cause?
+
+Developers cannot create pull requests due to branch policies. How would you diagnose the issue?
+
+A service connection suddenly starts failing with authentication errors. How would you troubleshoot it?
+
+Pipeline secrets are accidentally exposed in logs. What immediate actions would you take?
+
+A deployment to Kubernetes fails because pods are not becoming ready. How would you investigate?
+
+Users report slow application performance immediately after deployment. What checks would you perform?
+
+An Azure DevOps organization reaches its parallel job limit. How would you minimize deployment delays?
+
+These advanced questions cover the areas Accenture commonly explores for candidates with hands-on Azure DevOps experience and are useful for interviews requiring both DevOps and production support knowledge.
+
+
+
