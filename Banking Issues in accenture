@@ -289,3 +289,98 @@ How to Answer in an Accenture Interview
 If asked, "What production issues have you handled in Azure DevOps for banking applications?", you could answer:
 
 "In banking environments, most production issues revolve around deployment failures, Azure Artifacts package restore problems, expired service principal credentials, Azure Key Vault access issues, self-hosted agent outages, application configuration mismatches causing HTTP 500 errors, and infrastructure connectivity issues such as firewalls or private endpoints. My approach is to first assess the impact, review Azure DevOps pipeline logs, identify the failing component, validate infrastructure and permissions, coordinate with application and infrastructure teams if necessary, restore service quickly through rollback or redeployment, and then document the root cause and preventive actions. Throughout the process, I follow change management procedures and maintain clear communication with stakeholders."
+
+========================================================================================
+
+
+Here are several Accenture-style interview questions with answers tailored for an Azure DevOps/Application Support Engineer supporting banking applications. These are the kind of scenario-based questions commonly asked in L2/L3 production support interviews.
+
+1. Tell me about a critical production incident you handled.
+
+Sample Answer:
+
+"One of the critical incidents I handled was a production deployment failure due to an expired Azure Service Principal secret. The deployment pipeline failed during the Azure Resource Manager authentication stage. I immediately checked the pipeline logs, identified the authentication error, verified the service connection, and confirmed that the client secret had expired. After coordinating with the Azure administrators, the secret was renewed and updated in the Azure DevOps Service Connection. I validated the connection, reran the deployment, and confirmed the application was functioning correctly. Finally, I documented the root cause and recommended implementing secret expiry monitoring to prevent recurrence."
+
+2. A production deployment failed. What steps would you follow?
+
+Sample Answer:
+
+"I would first identify the exact stage where the deployment failed by reviewing the Azure DevOps pipeline logs. Then I'd determine whether the issue was related to infrastructure, application code, configuration, networking, or permissions. If the deployment partially completed, I'd assess whether a rollback was necessary. I would communicate the status to stakeholders, restore service as quickly as possible, verify application health after recovery, and document the root cause along with preventive measures."
+
+3. The pipeline completed successfully, but users are receiving HTTP 500 errors. What would you do?
+
+Sample Answer:
+
+"A successful deployment doesn't always guarantee a healthy application. I would first check the application logs and Event Viewer or Application Insights for exceptions. Then I'd verify configuration files, connection strings, Key Vault access, environment variables, and database connectivity. I'd compare the deployed configuration with the previous working version. Once the issue is identified, I'd either correct the configuration or roll back to the previous stable release if necessary."
+
+4. How do you troubleshoot a self-hosted Azure DevOps agent that suddenly goes offline?
+
+Sample Answer:
+
+"I would first verify whether the virtual machine hosting the agent is reachable. Then I'd check whether the Azure Pipelines Agent service is running, review the agent logs for errors, verify internet connectivity to Azure DevOps, ensure the Personal Access Token has not expired, and check firewall or proxy settings. If necessary, I'd restart or reconfigure the agent and validate that it reconnects to the agent pool."
+
+5. How do you troubleshoot a package restore failure in Azure Artifacts?
+
+Sample Answer:
+
+"I would verify the NuGet.config file, ensure the correct Azure Artifacts feed is configured, check feed permissions, confirm the package version exists, validate upstream sources, and clear the NuGet cache if required. If the package was recently deleted or upstream synchronization failed, I'd coordinate with the package management team before rerunning the build."
+
+6. How would you handle a Sev-1 incident in production?
+
+Sample Answer:
+
+"My priority would be restoring service as quickly as possible. I would acknowledge the incident immediately, assemble the required support teams, analyze logs to identify the root cause, implement a workaround or rollback if appropriate, continuously communicate updates to stakeholders, verify service restoration, and finally conduct a Root Cause Analysis meeting to implement preventive actions."
+
+7. A deployment works in Dev but fails only in Production. How would you investigate?
+
+Sample Answer:
+
+"I would compare both environments, including application configuration, service connections, Azure subscriptions, firewall rules, Key Vault permissions, environment variables, network connectivity, database schemas, and deployment approvals. Production failures are often caused by environment-specific configurations rather than application code."
+
+8. What would you do if Azure Key Vault secrets suddenly become inaccessible?
+
+Sample Answer:
+
+"I would verify whether the Key Vault is available, check RBAC or Access Policies, confirm the Managed Identity or Service Principal still has access, verify firewall settings, ensure the secret hasn't expired or been deleted, and review Azure Activity Logs for recent permission changes. After restoring access, I'd validate the application functionality."
+
+9. How do you investigate a sudden pipeline failure that was working yesterday?
+
+Sample Answer:
+
+"I'd compare the last successful and failed pipeline executions, review recent code commits, verify SDK or agent updates, check Azure DevOps service health, validate service connection credentials, examine package feeds, and determine whether any infrastructure or security policy changes occurred."
+
+10. How do you ensure production deployments are safe?
+
+Sample Answer:
+
+"I ensure all deployment approvals are completed, validate release notes, verify backup availability, perform pre-deployment health checks, confirm rollback procedures, monitor deployment progress, validate post-deployment application health, and communicate deployment completion to stakeholders."
+
+11. How would you troubleshoot a database connectivity issue after deployment?
+
+Sample Answer:
+
+"I'd verify the connection string, ensure the database server is accessible, validate firewall rules, check SQL authentication, review application logs for SQL exceptions, confirm database migrations completed successfully, and coordinate with the DBA if database-level issues are detected."
+
+12. Suppose users report slow application performance immediately after deployment.
+
+Sample Answer:
+
+"I'd compare application performance before and after deployment, monitor CPU, memory, SQL performance, API response times, and Application Insights telemetry. I'd determine whether the issue is related to code changes, configuration, database performance, or infrastructure. If the impact is severe, I'd recommend rolling back while the root cause is investigated."
+
+13. How do you handle an expired SSL certificate affecting production?
+
+Sample Answer:
+
+"I'd confirm the certificate expiry, identify all affected services, coordinate certificate renewal, update the certificate in Azure Key Vault, Application Gateway, or App Service as applicable, restart dependent services if required, validate HTTPS connectivity, and monitor the application after deployment."
+
+14. A deployment is blocked because approvals are pending. What would you do?
+
+Sample Answer:
+
+"I'd verify whether the required approvers have been notified, contact the designated approver if the deployment is within the approved maintenance window, document all communications, and ensure deployment proceeds only after formal approval. I would never bypass mandatory approvals in a banking environment."
+
+15. What are the biggest operational challenges in supporting banking applications?
+
+Sample Answer:
+
+"Banking applications require high availability, strict security, regulatory compliance, and minimal downtime. The biggest challenges include handling production incidents within SLA, managing secure deployments, protecting sensitive data, ensuring proper change management, maintaining audit trails, coordinating with multiple support teams, and implementing robust rollback strategies during production deployments."
