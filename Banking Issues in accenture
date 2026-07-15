@@ -1,0 +1,291 @@
+If you're interviewing for an Application Support Engineer/Azure DevOps role at Accenture supporting banking clients, the interviewer is typically looking for real-world production support scenarios rather than just Azure DevOps features.
+
+Here are some of the most common issues banking companies face and how an Application Support Engineer is expected to handle them.
+
+1. Production Deployment Failure
+Scenario
+
+A release to Production fails halfway through, leaving some services updated and others on the old version.
+
+Possible Causes
+Pipeline task failure
+IIS service not restarted
+Database migration failure
+Network timeout
+Storage account inaccessible
+Deployment package corrupted
+Troubleshooting
+Check Azure DevOps Pipeline logs.
+Identify the failed task.
+Verify deployment logs on target servers.
+Compare deployed artifacts.
+Roll back if required.
+Redeploy after fixing the issue.
+2. Azure DevOps Agent Offline
+Scenario
+
+The production deployment cannot start because the self-hosted agent is offline.
+
+Common Causes
+Agent service stopped
+VM rebooted
+Certificate expired
+Firewall issue
+Agent token expired
+Resolution
+Verify agent status.
+Restart Azure Pipelines Agent service.
+Check connectivity to Azure DevOps.
+Renew PAT if expired.
+Validate firewall rules.
+3. Pipeline Stuck in Queue
+
+Very common in banking organizations.
+
+Causes
+No available agent
+Agent capability mismatch
+Concurrency limit reached
+Agent disconnected
+Resolution
+Check Agent Pool
+Verify Demands & Capabilities
+Increase parallel jobs
+Restart agents
+4. Service Connection Authentication Failure
+
+Example
+
+The client xxxx with object id xxx does not have authorization.
+Causes
+Expired Service Principal secret
+Removed RBAC permission
+Subscription changed
+Tenant mismatch
+Resolution
+Verify Service Connection
+Renew secret
+Assign Contributor role
+Test connection
+5. Azure Key Vault Secrets Not Accessible
+
+Error
+
+403 Forbidden
+Causes
+Missing Key Vault permissions
+Firewall enabled
+Secret deleted
+Managed Identity missing access
+Resolution
+Check Access Policies/RBAC
+Verify Firewall
+Restore deleted secret
+Validate Managed Identity
+6. NuGet Package Restore Failure
+
+Common in banking because many organizations use Azure Artifacts.
+
+Example
+
+NU1101 Unable to find package
+Causes
+Feed permission
+Upstream disabled
+Package deleted
+Wrong NuGet.config
+Resolution
+Verify Azure Artifacts feed
+Check upstream sources
+Validate package version
+Clear NuGet cache
+7. Database Migration Failure
+
+During deployment,
+
+SQL Script execution failed
+Causes
+Table locked
+Permission issue
+Existing object
+Timeout
+Resolution
+Review SQL logs
+DBA coordination
+Rollback migration
+Rerun deployment
+8. Production Application Returns HTTP 500
+
+Pipeline succeeded.
+
+Application doesn't work.
+
+Causes
+Missing configuration
+Wrong connection string
+Missing environment variables
+Key Vault issue
+Investigation
+IIS Logs
+Application Logs
+Event Viewer
+Azure Monitor
+App Insights
+9. SSL Certificate Expired
+
+Banking applications rely heavily on SSL.
+
+Symptoms
+
+HTTPS unavailable
+Authentication failures
+API failures
+
+Resolution
+
+Renew certificate
+Update App Gateway
+Update Key Vault certificate
+Restart services
+10. API Authentication Failure
+
+Error
+
+401 Unauthorized
+
+Causes
+
+Expired JWT
+Invalid OAuth token
+Certificate expired
+Clock synchronization issue
+11. Azure Storage Access Failure
+
+Example
+
+403 Authentication Failed
+
+Causes
+
+SAS expired
+Firewall enabled
+Private Endpoint issue
+12. Azure Firewall Blocking Deployment
+
+Symptoms
+
+Pipeline works in Dev
+
+Fails in Production
+
+Resolution
+
+Check
+
+NSG
+Firewall
+Private Endpoint
+DNS Resolution
+13. Disk Space Full
+
+Build agent suddenly fails.
+
+Error
+
+No space left on device
+
+Resolution
+
+Delete old artifacts
+Clean work folder
+Schedule cleanup
+14. Build Suddenly Starts Failing
+
+Reasons
+
+SDK upgraded
+Package removed
+SonarQube issue
+New security policy
+15. Secrets Exposed in Pipeline
+
+One of the biggest banking concerns.
+
+Examples
+
+Password in YAML
+PAT in scripts
+Private key committed to Git
+
+Resolution
+
+Remove secrets immediately.
+Rotate credentials.
+Store secrets in Azure Key Vault.
+Enable secret scanning and audit access.
+16. Failed Rollback
+
+Deployment failed.
+
+Rollback also failed.
+
+Support engineer should
+
+Restore previous artifact
+Restore database backup
+Validate application
+Inform Change Management
+17. Change Window Exceeded
+
+Bank deployments often happen during strict maintenance windows (e.g., weekends or late nights). If deployment exceeds the approved window:
+
+Inform the Change Manager.
+Pause or rollback if required.
+Raise an incident.
+Obtain approval before continuing.
+18. Production Performance Issue After Deployment
+
+Deployment succeeds.
+
+Users complain application is slow.
+
+Investigate
+
+CPU
+Memory
+SQL blocking
+Application Insights
+Azure Monitor
+Recent code changes
+19. Azure DevOps Permission Issues
+
+Examples
+
+Cannot queue build
+Cannot approve release
+Cannot create repository
+Cannot access Azure Artifacts
+
+Check
+
+Azure DevOps security groups
+Project permissions
+Branch policies
+Azure AD group membership
+20. Banking-Specific Compliance and Security Challenges
+
+Banking organizations have stricter governance than many industries:
+
+Segregation of duties (developers cannot deploy directly to production).
+Mandatory approvals before production releases.
+Multi-level approval workflows.
+Audit logging for every deployment.
+Branch protection and pull request reviews.
+Secret management through Azure Key Vault.
+Limited production access using Privileged Identity Management (PIM).
+Regular vulnerability scanning and dependency checks.
+How to Answer in an Accenture Interview
+
+If asked, "What production issues have you handled in Azure DevOps for banking applications?", you could answer:
+
+"In banking environments, most production issues revolve around deployment failures, Azure Artifacts package restore problems, expired service principal credentials, Azure Key Vault access issues, self-hosted agent outages, application configuration mismatches causing HTTP 500 errors, and infrastructure connectivity issues such as firewalls or private endpoints. My approach is to first assess the impact, review Azure DevOps pipeline logs, identify the failing component, validate infrastructure and permissions, coordinate with application and infrastructure teams if necessary, restore service quickly through rollback or redeployment, and then document the root cause and preventive actions. Throughout the process, I follow change management procedures and maintain clear communication with stakeholders."
