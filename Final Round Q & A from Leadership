@@ -1,0 +1,128 @@
+For the final leadership round at Accenture (especially for an Application Support Engineer/Azure DevOps role supporting banking clients), the focus is usually less on deep technical details and more on ownership, decision-making, communication, client handling, and behavior during critical situations.
+
+Here are some common leadership-round questions along with answers you can adapt.
+
+1. Tell me about yourself.
+
+What they're looking for: Communication skills and a concise summary.
+
+Sample Answer:
+
+"I have around X years of experience in Azure DevOps and Application Support. My work includes managing CI/CD pipelines, Azure Repos, Azure Artifacts, release management, service connections, and production support. I've worked on incident management, deployment troubleshooting, and coordinating with infrastructure, development, and client teams to ensure high availability. I enjoy solving production issues while maintaining SLA commitments and continuously improving deployment processes."
+
+2. Why do you want to join Accenture?
+
+Sample Answer:
+
+"Accenture is known for delivering large-scale digital transformation projects across industries, especially banking and financial services. I believe it offers opportunities to work with global clients, modern cloud technologies, and complex enterprise environments. I'm looking for an organization where I can grow technically while contributing to business-critical applications."
+
+3. Why should we hire you?
+
+Sample Answer:
+
+"I bring hands-on experience with Azure DevOps and production application support. Beyond technical skills, I stay calm during incidents, communicate effectively with stakeholders, and focus on restoring services quickly while identifying long-term preventive measures. I believe these qualities align well with Accenture's client-focused culture."
+
+4. Tell me about a production issue you handled.
+
+Sample Answer:
+
+"During a production deployment, authentication failed because the Azure Service Principal secret had expired. I reviewed the deployment logs, identified the authentication issue, coordinated with the cloud team to renew the secret, updated the Azure DevOps service connection, validated the deployment, and ensured the application was restored within the agreed SLA. We also implemented secret expiry monitoring to reduce the risk of recurrence."
+
+5. If a production deployment fails at midnight, what will you do?
+
+Sample Answer:
+
+"My first priority is restoring service. I'd analyze the deployment logs, identify whether the issue is related to infrastructure, configuration, or application code, and decide whether to continue troubleshooting or perform a rollback. I'd keep stakeholders informed, coordinate with the required teams, validate the application after recovery, and complete RCA documentation afterward."
+
+6. How do you handle pressure during a Sev-1 incident?
+
+Sample Answer:
+
+"I stay focused on restoring service rather than assigning blame. I prioritize tasks, communicate regularly with stakeholders, involve the right technical teams, and work systematically until the issue is resolved. Afterward, I participate in the RCA process to prevent similar incidents."
+
+7. What if the developer says the issue isn't caused by the deployment, but the infrastructure team disagrees?
+
+Sample Answer:
+
+"I would rely on evidence rather than assumptions. I'd collect logs, timestamps, monitoring data, and deployment records to determine the root cause. My goal is to facilitate collaboration between teams and resolve the issue without focusing on blame."
+
+8. How do you prioritize multiple incidents?
+
+Sample Answer:
+
+"I prioritize based on business impact, severity, number of affected users, SLA commitments, and regulatory impact. Critical production incidents affecting customer transactions are handled before lower-priority issues."
+
+9. How do you communicate with clients during an outage?
+
+Sample Answer:
+
+"I provide regular updates that explain the current status, business impact, actions being taken, and estimated timelines if available. I avoid speculation and ensure communication is clear, accurate, and timely."
+
+10. What would you do if you don't know how to fix an issue?
+
+Sample Answer:
+
+"I'd begin by gathering logs and troubleshooting systematically. If I can't resolve it within a reasonable time, I'd engage senior engineers or the relevant support team while continuing to coordinate the incident. My focus is on resolving the issue efficiently rather than trying to solve everything independently."
+
+11. Have you ever disagreed with your manager?
+
+Sample Answer:
+
+"There have been situations where I suggested a different technical approach. I explained my reasoning using facts and data, listened to my manager's perspective, and supported the final decision once it was made. Maintaining a collaborative relationship is important."
+
+12. How do you ensure zero downtime during deployments?
+
+Sample Answer:
+
+"While zero downtime can't always be guaranteed, I reduce risk by validating deployments in lower environments, using deployment slots or blue-green strategies where supported, verifying backups, confirming rollback plans, and monitoring the application closely after deployment."
+
+13. Describe a mistake you made.
+
+Sample Answer:
+
+"Early in my career, I overlooked an environment-specific configuration during a deployment. Although the issue was resolved quickly, it taught me the importance of using deployment checklists and validating configuration differences before every production release."
+
+14. What is customer obsession?
+
+Sample Answer:
+
+"To me, customer obsession means understanding how technical issues affect the business and users, communicating proactively, restoring services quickly, and continuously improving processes to reduce future incidents."
+
+15. Where do you see yourself in five years?
+
+Sample Answer:
+
+"I see myself taking on greater technical and leadership responsibilities, mentoring team members, contributing to automation initiatives, and becoming a trusted subject matter expert in Azure DevOps and cloud operations."
+
+Banking-Specific Leadership Scenarios
+
+These are commonly asked because Accenture supports many banking clients.
+
+Q: A banking application is down during salary credit processing. What will you do?
+
+Answer:
+
+"I would immediately declare the incident based on the client's process, engage the required technical teams, assess business impact, communicate regular updates to stakeholders, work toward restoring the service within SLA, validate transaction processing after recovery, and support the RCA process."
+
+Q: A deployment succeeded, but customers cannot log in.
+
+Answer:
+
+"I'd verify the authentication service, identity provider connectivity, certificates, Key Vault access, application configuration, and recent deployment changes. If the deployment introduced the issue and a quick fix isn't available, I'd recommend a rollback to restore customer access."
+
+Q: What would you do if a client is upset during an outage?
+
+Answer:
+
+"I'd remain calm, acknowledge the impact, communicate transparently about the actions being taken, avoid making commitments I can't guarantee, and continue providing regular progress updates until the issue is resolved."
+
+Questions You Can Ask the Leadership Panel
+
+At the end of the interview, asking thoughtful questions leaves a positive impression. For example:
+
+"What are the biggest operational challenges your team is currently facing?"
+"How is success measured for someone in this role during the first six months?"
+"What opportunities are available to contribute to automation and process improvements?"
+"What qualities distinguish high-performing engineers on your team?"
+
+These questions show interest in the role and the team's goals rather than focusing only on benefits or promotions.
