@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Variables
+RESOURCE_GROUP="RG-01"
+LOCATION="northeurope"
+VM_NAME="NE-VM-01"
+IMAGE="Win2019Datacenter"
+VM_SIZE="Standard_DS1_v2"
+ADMIN_USERNAME="azureadmin"
+PASSWORD="HelloWorld123$"   # Use a secure password!
+
+# Create Resource Group
+az group create \
+    --name $RESOURCE_GROUP \
+    --location $LOCATION
+
+# Create the VM
+az vm create \
+    --resource-group $RESOURCE_GROUP \
+    --name $VM_NAME \
+    --image $IMAGE \
+    --size $VM_SIZE \
+    --admin-username $ADMIN_USERNAME \
+    --admin-password $PASSWORD \
+    --location $LOCATION
+
+# Open port 80 for IIS
+az vm open-port \
+    --resource-group $RESOURCE_GROUP \
+    --name $VM_NAME \
+    --port 80
+
+# Install IIS using a Custom Script Extension
+az vm extension set \
+    --resource-group $RESOURCE_GROUP \
+    --vm-name $VM_NAME \
+    --name CustomScriptExtension \
+    --publisher Microsoft.Compute \
+    --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server"}'
