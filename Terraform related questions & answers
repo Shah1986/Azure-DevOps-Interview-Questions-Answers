@@ -1,0 +1,266 @@
+How to create infrastructure using terraform if want to create different resources like vm, storage, keyvalut, sqlDB, appservice, function app, azure traffice manager, with different subscriptions?
+
+For an enterprise Azure environment (like Accenture, Microsoft, Deloitte, banking clients), you do not write everything in a single main.tf file. Instead, you follow a modular Terraform architecture that is reusable, scalable, and supports multiple Azure subscriptions.
+
+Recommended Project Structure
+terraform-azure-infra/
+│
+├── modules/
+│   ├── resource-group/
+│   ├── storage-account/
+│   ├── virtual-machine/
+│   ├── key-vault/
+│   ├── sql-server/
+│   ├── sql-database/
+│   ├── app-service-plan/
+│   ├── app-service/
+│   ├── function-app/
+│   ├── traffic-manager/
+│   ├── virtual-network/
+│   ├── subnet/
+│   ├── nsg/
+│   └── private-endpoint/
+│
+├── environments/
+│   ├── dev/
+│   ├── qa/
+│   ├── uat/
+│   └── prod/
+│
+├── provider.tf
+├── variables.tf
+├── terraform.tfvars
+├── outputs.tf
+└── backend.tf
+Scenario
+
+Suppose you have three Azure subscriptions:
+
+Subscription	Resources
+Subscription A	VM, Storage
+Subscription B	SQL Database, Key Vault
+Subscription C	App Service, Function App, Traffic Manager
+
+Terraform can manage all of them in a single deployment.
+
+Step 1. Configure Multiple Azure Providers
+provider "azurerm" {
+  alias           = "sub1"
+  subscription_id = "xxxxxxxx-xxxx-xxxx"
+  features {}
+}
+
+provider "azurerm" {
+  alias           = "sub2"
+  subscription_id = "yyyyyyyy-yyyy-yyyy"
+  features {}
+}
+
+provider "azurerm" {
+  alias           = "sub3"
+  subscription_id = "zzzzzzzz-zzzz-zzzz"
+  features {}
+}
+Step 2. Create Resource Groups
+resource "azurerm_resource_group" "rg1" {
+  provider = azurerm.sub1
+
+  name     = "RG-INFRA"
+  location = "Central India"
+}
+
+resource "azurerm_resource_group" "rg2" {
+  provider = azurerm.sub2
+
+  name     = "RG-DATABASE"
+  location = "Central India"
+}
+
+resource "azurerm_resource_group" "rg3" {
+  provider = azurerm.sub3
+
+  name     = "RG-WEB"
+  location = "Central India"
+}
+Step 3. Call Modules
+Storage Account
+module "storage" {
+
+  source = "./modules/storage-account"
+
+  providers = {
+    azurerm = azurerm.sub1
+  }
+
+  rg_name = azurerm_resource_group.rg1.name
+}
+Virtual Machine
+module "vm" {
+
+  source = "./modules/virtual-machine"
+
+  providers = {
+    azurerm = azurerm.sub1
+  }
+
+  rg_name = azurerm_resource_group.rg1.name
+}
+Key Vault
+module "keyvault" {
+
+  source = "./modules/key-vault"
+
+  providers = {
+    azurerm = azurerm.sub2
+  }
+
+  rg_name = azurerm_resource_group.rg2.name
+}
+SQL Server
+module "sqlserver" {
+
+  source = "./modules/sql-server"
+
+  providers = {
+    azurerm = azurerm.sub2
+  }
+
+  rg_name = azurerm_resource_group.rg2.name
+}
+SQL Database
+module "sqldb" {
+
+  source = "./modules/sql-database"
+
+  providers = {
+    azurerm = azurerm.sub2
+  }
+
+  rg_name = azurerm_resource_group.rg2.name
+}
+App Service Plan
+module "appserviceplan" {
+
+  source = "./modules/app-service-plan"
+
+  providers = {
+    azurerm = azurerm.sub3
+  }
+
+  rg_name = azurerm_resource_group.rg3.name
+}
+App Service
+module "appservice" {
+
+  source = "./modules/app-service"
+
+  providers = {
+    azurerm = azurerm.sub3
+  }
+
+  rg_name = azurerm_resource_group.rg3.name
+}
+Function App
+module "functionapp" {
+
+  source = "./modules/function-app"
+
+  providers = {
+    azurerm = azurerm.sub3
+  }
+
+  rg_name = azurerm_resource_group.rg3.name
+}
+Traffic Manager
+module "trafficmanager" {
+
+  source = "./modules/traffic-manager"
+
+  providers = {
+    azurerm = azurerm.sub3
+  }
+
+  rg_name = azurerm_resource_group.rg3.name
+}
+Module Dependency
+
+Terraform automatically handles dependencies when module outputs are referenced.
+
+For example:
+
+Resource Group
+      │
+      ▼
+Virtual Network
+      │
+      ▼
+Subnet
+      │
+      ▼
+NIC
+      │
+      ▼
+Virtual Machine
+
+For App Service:
+
+Resource Group
+      │
+      ▼
+App Service Plan
+      │
+      ▼
+Storage Account
+      │
+      ▼
+Function App
+
+For SQL:
+
+Resource Group
+      │
+      ▼
+SQL Server
+      │
+      ▼
+SQL Database
+How would Azure DevOps deploy this?
+
+Typical pipeline flow:
+
+Azure Repos
+      │
+      ▼
+Terraform Init
+      │
+      ▼
+Terraform Validate
+      │
+      ▼
+Terraform Format Check
+      │
+      ▼
+Terraform Plan
+      │
+      ▼
+Manual Approval (Production)
+      │
+      ▼
+Terraform Apply
+      │
+      ▼
+Post Deployment Validation
+Enterprise Best Practices
+Use Terraform modules for each Azure resource.
+Store the Terraform state remotely in an Azure Storage Account with state locking.
+Keep separate state files for Dev, QA, UAT, and Production.
+Use Azure Key Vault for secrets such as SQL passwords and service principal credentials.
+Use variable files (.tfvars) to customize each environment instead of changing the code.
+Configure multiple provider aliases to deploy resources across different Azure subscriptions.
+Use remote modules (Azure DevOps Git repositories or Terraform Registry) so multiple teams can reuse the same infrastructure code.
+Implement CI/CD in Azure DevOps with terraform fmt, validate, plan, and apply, and require approvals before production deployments.
+Interview Answer (Accenture Style)
+
+If asked, "How would you deploy multiple Azure resources across different subscriptions using Terraform?", you could answer:
+
+"I would follow a modular Terraform design rather than placing all resources in one file. Each resource type, such as Virtual Machines, Storage Accounts, Key Vaults, SQL Databases, App Services, Function Apps, and Traffic Manager, would be implemented as a reusable module. I would configure multiple AzureRM providers with aliases, each pointing to a different Azure subscription. The root module would invoke these modules using the appropriate provider alias and pass outputs between modules where dependencies exist. The Terraform state would be stored remotely in an Azure Storage Account with state locking, secrets would be managed through Azure Key Vault, and the deployment would be automated through Azure DevOps pipelines using terraform init, validate, plan, and apply, with manual approvals for production. This approach is scalable, reusable, and aligns with enterprise best practices."
