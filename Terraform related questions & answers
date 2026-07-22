@@ -264,3 +264,191 @@ Interview Answer (Accenture Style)
 If asked, "How would you deploy multiple Azure resources across different subscriptions using Terraform?", you could answer:
 
 "I would follow a modular Terraform design rather than placing all resources in one file. Each resource type, such as Virtual Machines, Storage Accounts, Key Vaults, SQL Databases, App Services, Function Apps, and Traffic Manager, would be implemented as a reusable module. I would configure multiple AzureRM providers with aliases, each pointing to a different Azure subscription. The root module would invoke these modules using the appropriate provider alias and pass outputs between modules where dependencies exist. The Terraform state would be stored remotely in an Azure Storage Account with state locking, secrets would be managed through Azure Key Vault, and the deployment would be automated through Azure DevOps pipelines using terraform init, validate, plan, and apply, with manual approvals for production. This approach is scalable, reusable, and aligns with enterprise best practices."
+
+========================================================================================
+=========================================================================================
+
+This is a common interview question. Approvals are not added inside the Terraform script. Terraform is only responsible for defining and provisioning infrastructure. Approvals are implemented in the CI/CD pipeline (such as Azure DevOps, GitHub Actions, or Jenkins).
+
+In Azure DevOps, approvals are typically configured using Environments or Manual Validation.
+
+Option 1: Environment Approval (Recommended)
+
+This is the enterprise-standard approach.
+
+Pipeline Flow
+Terraform Init
+      │
+Terraform Validate
+      │
+Terraform Plan
+      │
+Publish Plan Artifact
+      │
+Deploy to Production Environment
+      │
+───────────────
+Manual Approval
+───────────────
+      │
+Terraform Apply
+Example YAML
+stages:
+
+- stage: Plan
+  jobs:
+  - job: TerraformPlan
+    steps:
+    - script: terraform init
+    - script: terraform plan -out=tfplan
+
+- stage: Apply
+  dependsOn: Plan
+
+  jobs:
+  - deployment: DeployInfrastructure
+
+    environment: Production
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: terraform apply tfplan
+
+In Azure DevOps:
+
+Go to Pipelines → Environments
+Create an environment named Production
+Open Approvals and Checks
+Add the required approvers (e.g., Team Lead, Architect, CAB)
+
+When the pipeline reaches the Apply stage, it pauses until approval is granted.
+
+Option 2: Manual Validation Task
+jobs:
+
+- job: WaitForApproval
+
+  pool: server
+
+  steps:
+
+  - task: ManualValidation@0
+
+    timeoutInMinutes: 1440
+
+    inputs:
+
+      notifyUsers: |
+        abc@company.com
+        xyz@company.com
+
+      instructions: 'Please approve Terraform deployment.'
+
+      onTimeout: reject
+
+The pipeline pauses until someone approves or rejects the deployment.
+
+Enterprise Pipeline Example
+Developer
+      │
+      ▼
+Pull Request
+      │
+      ▼
+Terraform Format
+      │
+      ▼
+Terraform Validate
+      │
+      ▼
+Terraform Plan
+      │
+      ▼
+Publish Plan Artifact
+      │
+      ▼
+Team Lead Approval
+      │
+      ▼
+Terraform Apply (Dev)
+      │
+      ▼
+Smoke Testing
+      │
+      ▼
+Manager Approval
+      │
+      ▼
+Terraform Apply (QA)
+      │
+      ▼
+Testing
+      │
+      ▼
+CAB Approval
+      │
+      ▼
+Terraform Apply (Production)
+Can Terraform Itself Ask for Approval?
+
+No.
+
+Terraform supports:
+
+terraform plan
+terraform apply
+terraform destroy
+
+It has no built-in manual approval mechanism.
+
+Approval is handled by:
+
+Azure DevOps
+GitHub Actions
+Jenkins
+GitLab CI
+Other CI/CD orchestration tools
+Real-Time Banking Scenario
+
+Suppose you're deploying:
+
+Virtual Machine
+SQL Database
+Key Vault
+App Service
+Function App
+
+The pipeline might look like:
+
+Terraform Plan
+        │
+Publish tfplan
+        │
+Lead Approval
+        │
+Terraform Apply (Development)
+        │
+Integration Tests
+        │
+QA Approval
+        │
+Terraform Apply (UAT)
+        │
+User Acceptance Testing
+        │
+CAB Approval
+        │
+Terraform Apply (Production)
+
+This ensures no infrastructure changes reach production without the required approvals.
+
+Accenture Interview Question
+Interviewer:
+
+"Can you implement approvals in Terraform?"
+
+Strong Answer:
+
+"Terraform itself does not provide a manual approval feature. It focuses only on infrastructure provisioning. In enterprise environments, approvals are implemented in the CI/CD pipeline. In Azure DevOps, I would configure a multi-stage pipeline with a Plan stage that generates and publishes a Terraform plan, followed by an Apply stage that targets an Azure DevOps Environment. I would configure Approvals and Checks on that environment so designated approvers, such as a Team Lead, Change Advisory Board (CAB), or Operations Manager, must approve before the terraform apply step executes. This ensures infrastructure changes follow governance and change management policies."
