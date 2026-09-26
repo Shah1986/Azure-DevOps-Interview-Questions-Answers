@@ -41,3 +41,60 @@ CI builds/tests/scans the image and pushes it to ACR with an immutable tag. CD a
 
 **How do you roll back a production deployment?**
 `helm rollback booking-app -n booking` (or `kubectl rollout undo deployment/<name>`) reverts to the previous release/ReplicaSet; investigate root cause via logs/events before deciding to roll forward instead.
+
+
+======================================================================
+
+
+# Troubleshooting Guide
+
+## Pod Pending
+**Symptoms:** `kubectl get pods` shows `Pending` indefinitely.
+**Commands:** `kubectl describe pod <pod>` → check the Events section.
+**Common causes:** insufficient CPU/memory on nodes, unbound PVC, node selector/taint mismatch.
+**Fix:** scale the node pool, fix the PVC storage class, or relax the node selector.
+
+## CrashLoopBackOff
+**Symptoms:** Pod restarts repeatedly.
+**Commands:** `kubectl logs <pod>` then `kubectl logs <pod> --previous` (the crashed instance's logs).
+**Common causes:** app throws on startup, missing env var, wrong DB connection string.
+**Fix:** correct the config/Secret, then `kubectl rollout restart deployment/<name>`.
+
+## ImagePullBackOff
+**Symptoms:** Pod stuck, events show pull errors.
+**Check:** image name/tag spelling, registry URL, and that AKS's kubelet identity has `AcrPull` on the ACR.
+**Fix:** `az aks update --attach-acr <acr-name>` or fix the role assignment, then redeploy.
+
+## OOMKilled
+**Symptoms:** container terminated, reason `OOMKilled` in `kubectl describe pod`.
+**Cause:** the container hit its memory `limit`.
+**Fix:** raise the memory limit or fix a leak; check with `kubectl top pods`.
+
+## Service not working
+**Commands:** `kubectl get svc`, `kubectl get endpoints`, `kubectl describe svc <name>`.
+**Common cause:** Service selector doesn't match any Pod's labels → empty Endpoints.
+**Fix:** align `spec.selector` on the Service with `metadata.labels` on the Pods.
+
+## Ingress 502/503
+**Commands:** `kubectl get ingress`, `kubectl describe ingress`, then check backend Service/Endpoints as above.
+**Common cause:** backend Pods not Ready yet, or wrong Service port.
+
+## Database connection failure
+**Commands:** check backend logs, verify `DB_HOST`/`DB_PASSWORD` from ConfigMap/Secret, verify firewall/VNet rules on the managed DB allow the AKS subnet.
+
+## Node NotReady
+**Commands:** `kubectl get nodes`, `kubectl describe node <node>`.
+**Common causes:** kubelet down, disk pressure, network plugin issue.
+**Fix:** for AKS, often resolved by `az aks nodepool upgrade`/reboot, or scaling the pool.
+
+## High CPU / High Memory
+**Commands:** `kubectl top pods`, `kubectl top nodes`.
+**Fix:** tune `resources.requests/limits`, check HPA is scaling (`kubectl get hpa`, `kubectl describe hpa`).
+
+## Failed deployment
+**Commands:** `kubectl rollout status deployment/<name>`, `kubectl rollout history deployment/<name>`.
+**Fix:** `kubectl rollout undo deployment/<name>` or `helm rollback booking-app -n booking`.
+
+## Secret/Config issue
+**Symptoms:** app boots but behaves wrong (points at wrong DB, missing feature flag).
+**Check:** `kubectl get configmap booking-config -o yaml`, `kubectl get secret booking-secret -o yaml` (values are base64, not encrypted).
