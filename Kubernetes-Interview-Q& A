@@ -1,0 +1,43 @@
+# Interview Questions & Answers
+
+**What happens when you run `kubectl apply`?**
+kubectl sends the manifest to the API server, which validates and persists the desired state in etcd. Controllers then reconcile actual cluster state toward that desired state (e.g. the Deployment controller creates/updates a ReplicaSet, which creates Pods).
+
+**Difference between a Pod and a Deployment?**
+A Pod is a single instance of one or more containers with no self-healing on its own. A Deployment manages a ReplicaSet of Pods, providing declarative rolling updates, rollback, and self-healing (recreates Pods that die).
+
+**ClusterIP vs NodePort vs LoadBalancer?**
+ClusterIP: internal-only virtual IP. NodePort: exposes the Service on a static port on every node (mostly for dev/testing). LoadBalancer: provisions a cloud load balancer with a public IP, routing to the Service.
+
+**What is Ingress?**
+An L7 HTTP(S) routing layer inside the cluster — host/path-based routing, TLS termination — implemented by an Ingress Controller (e.g. NGINX) that watches Ingress objects.
+
+**How does Kubernetes perform rolling updates?**
+The Deployment controller creates a new ReplicaSet, gradually scales it up while scaling the old one down, respecting `maxSurge`/`maxUnavailable`, and only proceeds once new Pods pass their readiness probe.
+
+**What happens when a Pod dies?**
+If it's managed by a Deployment/ReplicaSet, the controller notices the missing replica and schedules a new Pod. A bare Pod (not managed by a controller) is not recreated.
+
+**Difference between readiness and liveness probes?**
+Readiness determines if a Pod should receive traffic (fails → removed from Service endpoints, Pod stays running). Liveness determines if a Pod should be restarted (fails → kubelet kills and restarts the container).
+
+**How does HPA work?**
+The HPA controller polls the metrics API (CPU/memory or custom metrics) at intervals, compares against the target, and adjusts `replicas` on the target Deployment accordingly, within min/max bounds.
+
+**How does Kubernetes schedule Pods?**
+The scheduler filters nodes that meet requirements (resources, taints/tolerations, affinity), then scores the remaining candidates and binds the Pod to the best one.
+
+**What happens when a node goes down?**
+The node controller marks it `NotReady`; after a grace period, Pods on it are marked for eviction and rescheduled onto healthy nodes (if they're managed by a controller).
+
+**How do you troubleshoot CrashLoopBackOff?**
+`kubectl logs <pod> --previous` to see why the last instance died, `kubectl describe pod` for events, check env vars/Secrets and resource limits (OOMKilled shows up here too).
+
+**How do you secure Kubernetes Secrets?**
+Never commit them to Git; prefer Azure Key Vault + CSI driver or External Secrets Operator; enable encryption at rest for etcd; restrict access via RBAC; avoid printing them in logs.
+
+**How does CI/CD deploy into AKS?**
+CI builds/tests/scans the image and pushes it to ACR with an immutable tag. CD authenticates to AKS (`az aks get-credentials`), then runs `helm upgrade --install` with that tag, and verifies with `kubectl rollout status`.
+
+**How do you roll back a production deployment?**
+`helm rollback booking-app -n booking` (or `kubectl rollout undo deployment/<name>`) reverts to the previous release/ReplicaSet; investigate root cause via logs/events before deciding to roll forward instead.
